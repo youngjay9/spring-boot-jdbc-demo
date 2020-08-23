@@ -1,0 +1,24 @@
+# DataSource配置
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring_bank_app_db
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+
+#server setting
+server:
+  port: 10022
+
+#logging
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    root: INFO
+    com.jay: INFO
+    org.springframework.web: INFO
+    org.hibernate: ERROR
+    org.hibernate.SQL: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: INFO
