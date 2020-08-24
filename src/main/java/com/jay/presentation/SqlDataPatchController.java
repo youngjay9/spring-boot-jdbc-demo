@@ -150,16 +150,28 @@ public class SqlDataPatchController {
     while(columns.next())
     {
       String columnName = columns.getString("COLUMN_NAME");
-      int datatype = Integer.valueOf(columns.getString("DATA_TYPE"));
-
-      if(datatype != Types.VARCHAR || datatype != Types.CHAR){
-
+      if(columnName.equals(sequenceColumnName)){
+        continue;
       }
 
+      int datatype = Integer.valueOf(columns.getString("DATA_TYPE"));
 
+      if(datatype == Types.VARCHAR){
+        logger.info("columnName:{}, dataType is Varchar", columnName);
+      }
+      else if(datatype == Types.CHAR){
+        logger.info("columnName:{}, dataType is Char", columnName);
+      }
+      else if(datatype == Types.DATE){
+        logger.info("columnName:{}, dataType is Date", columnName);
+      }
+      else if(datatype == Types.TIMESTAMP){
+        logger.info("columnName:{}, dataType is TIMESTAMP", columnName);
+      }
+      else if(datatype == Types.INTEGER){
+        logger.info("columnName:{}, dataType is {}}", columnName, datatype);
+      }
 
-      //Printing results
-      logger.info("columnName:{}, dataType:{}", columnName, datatype);
     }
 
     return response;
