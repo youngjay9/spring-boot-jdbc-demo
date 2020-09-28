@@ -74,7 +74,7 @@ public class SqlDataPatchController {
     StringBuffer columnsSb = new StringBuffer();
 
     IntStream.range(0, insertedColumns.size() - 1).forEach(i->{
-      columnsSb.append(insertedColumns.get(i)).append(",");
+      columnsSb.append(insertedColumns.get(i)).append(" ,");
     });
 
     columnsSb.append(insertedColumns.get(insertedColumns.size() -1));
@@ -127,18 +127,20 @@ public class SqlDataPatchController {
 
     //params
     StringBuffer paramsSb = new StringBuffer();
-    paramsSb.append("/*params").append("\n");
+    paramsSb.append("/").append("\n");
+    paramsSb.append("params:");
 
     IntStream.range(0, insertedColumns.size()-1).forEach(i->{
       if(!insertedColumns.get(i).equals(sequenceColumnName)){
-        paramsSb.append(data.get(insertedColumns.get(i))).append("@@");
+    	  String columnName = insertedColumns.get(i);
+        paramsSb.append(data.get(columnName)).append("@@").append("\n");
       }
 
     });
 
     paramsSb.append(data.get(insertedColumns.get(insertedColumns.size() - 1)));
 
-    paramsSb.append("*/");
+    paramsSb.append("/");
 
     logger.info("params:{}", paramsSb.toString());
 
@@ -171,6 +173,10 @@ public class SqlDataPatchController {
       else if(datatype == Types.INTEGER){
         logger.info("columnName:{}, dataType is {}}", columnName, datatype);
       }
+      else{
+    	  logger.info("columnName:{}, unknown dataType: {}}", columnName, datatype);
+      }
+      
 
     }
 
